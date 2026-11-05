@@ -5,6 +5,7 @@ body { margin: 0; font-family: "Segoe UI", system-ui, Arial, sans-serif; backgro
 .small { font-size: 0.85rem; }
 .error { color: #c0392b; min-height: 1.1em; }
 .success { color: #1e8449; min-height: 1.1em; }
+img, canvas { max-width: 100%; height: auto; }
 
 .btn { border: 1px solid #d0d5dd; background: #fff; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 0.92rem; }
 .btn:hover { background: #eef2ff; }
@@ -16,20 +17,21 @@ body { margin: 0; font-family: "Segoe UI", system-ui, Arial, sans-serif; backgro
 .btn.danger:hover { background: #fdecea; }
 
 /* Login */
-.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #2f54eb, #722ed1); }
-.login-card { background: #fff; padding: 32px; border-radius: 14px; width: 340px; box-shadow: 0 12px 32px rgba(0,0,0,.25); }
+.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #2f54eb, #722ed1); padding: 16px; }
+.login-card { background: #fff; padding: 32px; border-radius: 14px; width: 340px; max-width: 100%; box-shadow: 0 12px 32px rgba(0,0,0,.25); }
 .login-card h1 { margin: 0 0 4px; }
 .login-card label { display: block; margin: 12px 0 4px; font-size: 0.9rem; }
 .login-card input { width: 100%; padding: 9px; border: 1px solid #d0d5dd; border-radius: 8px; }
 
 /* Shell */
-.topbar { display: flex; align-items: center; gap: 20px; background: #141b2d; color: #fff; padding: 10px 20px; position: sticky; top: 0; }
-.brand { font-weight: 700; font-size: 1.1rem; }
+.topbar { display: flex; align-items: center; gap: 20px; background: #141b2d; color: #fff; padding: 10px 20px; position: sticky; top: 0; z-index: 10; flex-wrap: wrap; }
+.brand { font-weight: 700; font-size: 1.1rem; white-space: nowrap; }
 .topbar nav { display: flex; gap: 6px; flex: 1; }
-.nav-btn { background: transparent; border: none; color: #cbd5e1; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.95rem; }
+.nav-btn { background: transparent; border: none; color: #cbd5e1; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.95rem; white-space: nowrap; }
 .nav-btn:hover { background: #232c44; color: #fff; }
 .nav-btn.active { background: #2f54eb; color: #fff; }
 .userbox { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+.userbox span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 main { max-width: 1120px; margin: 0 auto; padding: 22px 18px 48px; }
 h2 { margin-top: 4px; }
 
@@ -45,10 +47,14 @@ h2 { margin-top: 4px; }
 .panel h3 { margin-top: 0; }
 
 /* Tables & forms */
-.table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(16,24,40,.08); }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(16,24,40,.08); margin-bottom: 16px; }
+.panel .table-wrap { box-shadow: none; margin-bottom: 0; }
+.table { width: 100%; border-collapse: collapse; background: #fff; }
+.table-wrap .table { min-width: 540px; }
+.table-wrap .table#productsTable { min-width: 700px; }
 .table th, .table td { padding: 10px 12px; border-bottom: 1px solid #eef0f4; text-align: left; font-size: 0.93rem; }
 .table th { background: #f8fafc; color: #475467; }
-.badge { padding: 2px 8px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; }
+.badge { padding: 2px 8px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
 .badge.ok { background: #e6f4ea; color: #1e8449; }
 .badge.low { background: #fdecea; color: #c0392b; }
 .toolbar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
@@ -59,3 +65,31 @@ h2 { margin-top: 4px; }
 .bill-row { display: grid; grid-template-columns: 1fr 90px 34px; gap: 8px; margin: 8px 0; }
 .bill-row select, .bill-row input { padding: 8px; border: 1px solid #d0d5dd; border-radius: 8px; width: 100%; }
 .bill-total { font-weight: 700; font-size: 1.05rem; margin: 14px 0 6px; }
+
+/* ===================== Mobile (<= 720px) ===================== */
+@media (max-width: 720px) {
+  .topbar { gap: 8px 12px; padding: 10px 12px; }
+  .brand { font-size: 1rem; }
+  .userbox { margin-left: auto; font-size: 0.82rem; }
+  .userbox span { max-width: 130px; }
+  .topbar nav { order: 3; flex: 1 1 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
+  .nav-btn { padding: 8px 10px; font-size: 0.9rem; }
+  main { padding: 16px 12px 40px; }
+  h2 { font-size: 1.3rem; }
+  .panel { padding: 14px; }
+  .login-card { padding: 24px 20px; }
+  /* 16px inputs stop iOS Safari auto-zoom on focus */
+  input, select, textarea { font-size: 16px; }
+  .toolbar input[type="search"] { min-width: 0; flex: 1 1 100%; }
+  .bill-row { grid-template-columns: 1fr 74px 34px; gap: 6px; }
+  .table th, .table td { padding: 8px 10px; font-size: 0.88rem; }
+}
+
+/* ===================== Small phones (<= 560px) ===================== */
+@media (max-width: 560px) {
+  .cards { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .card { padding: 12px; }
+  .card-label { font-size: 0.72rem; }
+  .card-value { font-size: 1.28rem; }
+  .form-grid { grid-template-columns: 1fr 1fr; }
+}
