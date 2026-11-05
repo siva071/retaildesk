@@ -23,9 +23,24 @@ if DATABASE_URL.startswith("postgres://"):
 elif DATABASE_URL.startswith("postgresql://"):
     DATABASE_URL = "postgresql+psycopg2://" + DATABASE_URL[len("postgresql://"):]
 
-# Neon/Supabase pooled endpoints work fine with psycopg2 defaults; if the
-# provider string includes query params (e.g. ?sslmode=require) SQLAlchemy
-# passes them through to psycopg2 unchanged.
+
+def _strip_unsupported_params(url: str) -> str:
+    """Drop query params psycopg2 rejects.
+
+    Neon appends "channel_binding=require" to its connection strings;
+    SQLAlchemy passes URL query params through to psycopg2 as connect
+    kwargs, and psycopg2 raises on that one. Other params (e.g.
+    sslmode=require) are supported and kept.
+    """
+    if "?" not in url:
+        return url
+    base, _, query = url.partition("?")
+    kept = [p for p in query.split("&") if not p.startswith("channel_binding=")]
+    return base + ("?" + "&".join(kept) if kept else "")
+
+
+if DATABASE_URL.startswith("postgresql"):
+    DATABASE_URL = _strip_unsupported_params(DATABASE_URL)
 
 connect_args = {}
 engine_kwargs = {}
@@ -38,7 +53,6 @@ else:
 
 engine = create_engine(DATABASE_URL, connect_args=connect_args, **engine_kwargs)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 Base = declarative_base()
 
 
