@@ -6,6 +6,8 @@ adds products, bills customers at the counter, watches stock reduce
 automatically, downloads GST invoices as PDFs, and tracks revenue on a
 dashboard — with staff accounts that have limited permissions.
 
+**Live Demo:** https://retaildesk-api.onrender.com — demo login `demo@retaildesk.in` / `demo1234`
+
 > Sample/seed data in this repo is fictional demo data. No real users or sales.
 
 ## Features
