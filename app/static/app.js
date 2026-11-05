@@ -92,7 +92,7 @@ async function loadDashboard() {
     $("#statLowStock").textContent = s.low_stock_count;
     const tbody = $("#topProductsTable tbody");
     tbody.innerHTML = s.top_products.map((p) =>
-      `<tr><td>${escapeHtml(p.product_name)}</td><td>${p.quantity_sold}</td><td>${money(p.revenue)}</td></tr>`).join("")
+      `<tr><td data-label="Product">${escapeHtml(p.product_name)}</td><td data-label="Qty Sold">${p.quantity_sold}</td><td data-label="Revenue">${money(p.revenue)}</td></tr>`).join("")
       || `<tr><td colspan="3">No sales yet</td></tr>`;
     drawChart(s.last_7_days);
   } catch (err) {
@@ -137,10 +137,10 @@ async function loadProducts() {
     const isOwner = state.user.role === "owner";
     $("#productsTable tbody").innerHTML = items.map((p) => `
       <tr>
-        <td>${escapeHtml(p.name)}</td><td>${escapeHtml(p.sku)}</td><td>${escapeHtml(p.category || "-")}</td>
-        <td>${money(p.price)}</td><td>${p.gst_percent}%</td><td>${p.stock_qty}</td>
-        <td><span class="badge ${p.is_low_stock ? "low" : "ok"}">${p.is_low_stock ? "Low Stock" : "In Stock"}</span></td>
-        <td>
+        <td data-label="Name">${escapeHtml(p.name)}</td><td data-label="SKU">${escapeHtml(p.sku)}</td><td data-label="Category">${escapeHtml(p.category || "-")}</td>
+        <td data-label="Price">${money(p.price)}</td><td data-label="GST %">${p.gst_percent}%</td><td data-label="Stock">${p.stock_qty}</td>
+        <td data-label="Status"><span class="badge ${p.is_low_stock ? "low" : "ok"}">${p.is_low_stock ? "Low Stock" : "In Stock"}</span></td>
+        <td class="actions-cell">
           <button class="btn small" onclick="restock(${p.id}, '${escapeHtml(p.name)}')">Restock</button>
           ${isOwner ? `<button class="btn small danger" onclick="deleteProduct(${p.id})">Delete</button>` : ""}
         </td>
@@ -268,8 +268,8 @@ async function loadBillsTable() {
   try {
     const bills = await api("/api/bills?limit=15");
     $("#billsTable tbody").innerHTML = bills.map((b) => `
-      <tr><td>${b.bill_number}</td><td>${money(b.grand_total)}</td><td>${b.payment_mode.toUpperCase()}</td>
-      <td><a href="#" onclick="downloadInvoice(${b.id}); return false;">PDF</a></td></tr>`).join("")
+      <tr><td data-label="Bill No.">${b.bill_number}</td><td data-label="Total">${money(b.grand_total)}</td><td data-label="Payment">${b.payment_mode.toUpperCase()}</td>
+      <td data-label="Invoice"><a href="#" onclick="downloadInvoice(${b.id}); return false;">PDF</a></td></tr>`).join("")
       || `<tr><td colspan="4">No bills yet</td></tr>`;
   } catch (err) { $("#billError").textContent = err.message; }
 }
@@ -293,7 +293,7 @@ async function loadCustomers() {
     const customers = await api("/api/customers");
     state.customers = customers;
     $("#customersTable tbody").innerHTML = customers.map((c) =>
-      `<tr><td>${escapeHtml(c.name)}</td><td>${escapeHtml(c.phone || "-")}</td><td>${escapeHtml(c.email || "-")}</td></tr>`).join("")
+      `<tr><td data-label="Name">${escapeHtml(c.name)}</td><td data-label="Phone">${escapeHtml(c.phone || "-")}</td><td data-label="Email">${escapeHtml(c.email || "-")}</td></tr>`).join("")
       || `<tr><td colspan="3">No customers yet</td></tr>`;
   } catch (err) { $("#customerError").textContent = err.message; }
 }

@@ -72,7 +72,7 @@ h2 { margin-top: 4px; }
   .brand { font-size: 1rem; }
   .userbox { margin-left: auto; font-size: 0.82rem; }
   .userbox span { max-width: 130px; }
-  .topbar nav { order: 3; flex: 1 1 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
+  .topbar nav { order: 3; flex: 1 1 100%; flex-wrap: wrap; overflow-x: visible; padding-bottom: 2px; }
   .nav-btn { padding: 8px 10px; font-size: 0.9rem; }
   main { padding: 16px 12px 40px; }
   h2 { font-size: 1.3rem; }
@@ -83,6 +83,22 @@ h2 { margin-top: 4px; }
   .toolbar input[type="search"] { min-width: 0; flex: 1 1 100%; }
   .bill-row { grid-template-columns: 1fr 74px 34px; gap: 6px; }
   .table th, .table td { padding: 8px 10px; font-size: 0.88rem; }
+
+  /* Tables become stacked cards — no sideways scrolling anywhere */
+  .table-wrap { overflow-x: visible; background: transparent; box-shadow: none; border-radius: 0; }
+  .table-wrap .table, .table-wrap .table#productsTable { min-width: 0; }
+  .table { background: transparent; }
+  .table thead { display: none; }
+  .table, .table tbody, .table tr, .table td { display: block; width: 100%; }
+  .table tr { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(16,24,40,.08); padding: 10px 14px; margin-bottom: 10px; }
+  .panel .table tr { background: #f8fafc; box-shadow: none; border: 1px solid #eef0f4; }
+  .table td { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 6px 0; border-bottom: 1px solid #f1f3f7; text-align: right; overflow-wrap: anywhere; }
+  .table td:last-child { border-bottom: none; }
+  .table td::before { content: attr(data-label); font-weight: 600; color: #475467; font-size: 0.78rem; text-transform: uppercase; letter-spacing: .03em; text-align: left; flex-shrink: 0; }
+  .table td[colspan] { display: block; text-align: center; }
+  .table td[colspan]::before { content: none; }
+  .table td.actions-cell { justify-content: flex-end; gap: 8px; }
+  .table td.actions-cell::before { content: none; }
 }
 
 /* ===================== Small phones (<= 560px) ===================== */
