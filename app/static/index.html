@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RetailDesk — Smart Billing & Inventory</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ======================= LOGIN ======================= -->
+<section id="loginView" class="login-wrap">
+  <div class="login-card">
+    <h1>🛍️ RetailDesk</h1>
+    <p class="muted">Smart Billing &amp; Inventory for Retail Stores</p>
+    <form id="loginForm">
+      <label>Email
+        <input type="email" id="loginEmail" required placeholder="demo@retaildesk.in" />
+      </label>
+      <label>Password
+        <input type="password" id="loginPassword" required placeholder="demo1234" />
+      </label>
+      <button type="submit" class="btn primary full">Login</button>
+      <p id="loginError" class="error"></p>
+    </form>
+    <p class="muted small">Demo owner: <b>demo@retaildesk.in / demo1234</b><br/>
+    Demo staff: <b>staff@retaildesk.in / staff1234</b></p>
+  </div>
+</section>
+
+<!-- ======================= APP SHELL ======================= -->
+<div id="appView" class="hidden">
+  <header class="topbar">
+    <div class="brand">🛍️ RetailDesk</div>
+    <nav>
+      <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+      <button class="nav-btn" data-view="products">Products</button>
+      <button class="nav-btn" data-view="billing">Billing</button>
+      <button class="nav-btn" data-view="customers">Customers</button>
+    </nav>
+    <div class="userbox">
+      <span id="userInfo"></span>
+      <button id="logoutBtn" class="btn small">Logout</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- DASHBOARD -->
+    <section id="view-dashboard" class="view">
+      <h2>Dashboard</h2>
+      <div class="cards">
+        <div class="card"><div class="card-label">Revenue Today</div><div class="card-value" id="statRevenueToday">–</div></div>
+        <div class="card"><div class="card-label">Revenue This Month</div><div class="card-value" id="statRevenueMonth">–</div></div>
+        <div class="card"><div class="card-label">Bills Today</div><div class="card-value" id="statBillsToday">–</div></div>
+        <div class="card warn"><div class="card-label">Low Stock Items</div><div class="card-value" id="statLowStock">–</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <h3>Revenue — Last 7 Days</h3>
+          <canvas id="revenueChart" width="520" height="240"></canvas>
+        </div>
+        <div class="panel">
+          <h3>Top 5 Products</h3>
+          <table class="table" id="topProductsTable">
+            <thead><tr><th>Product</th><th>Qty Sold</th><th>Revenue</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <p id="dashboardError" class="error"></p>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="view-products" class="view hidden">
+      <h2>Products &amp; Inventory</h2>
+      <div class="toolbar">
+        <input type="search" id="productSearch" placeholder="Search name, SKU, category…" />
+        <button class="btn" id="lowStockBtn">Show Low Stock</button>
+        <button class="btn" id="allProductsBtn">Show All</button>
+      </div>
+      <form id="productForm" class="panel form-grid">
+        <input name="name" placeholder="Product name *" required />
+        <input name="sku" placeholder="SKU *" required />
+        <input name="category" placeholder="Category" />
+        <input name="price" type="number" step="0.01" min="0" placeholder="Price ₹ *" required />
+        <input name="gst_percent" type="number" step="0.5" min="0" max="28" placeholder="GST % (default 5)" />
+        <input name="stock_qty" type="number" min="0" placeholder="Stock qty" />
+        <input name="low_stock_threshold" type="number" min="0" placeholder="Low-stock alert at" />
+        <button type="submit" class="btn primary">+ Add Product</button>
+      </form>
+      <p id="productError" class="error"></p>
+      <table class="table" id="productsTable">
+        <thead><tr><th>Name</th><th>SKU</th><th>Category</th><th>Price ₹</th><th>GST %</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- BILLING -->
+    <section id="view-billing" class="view hidden">
+      <h2>Billing Counter</h2>
+      <div class="grid-2">
+        <div class="panel">
+          <h3>New Bill</h3>
+          <label>Customer (optional)
+            <select id="billCustomer"><option value="">Walk-in Customer</option></select>
+          </label>
+          <label>Payment Mode
+            <select id="billPayment">
+              <option value="cash">Cash</option>
+              <option value="upi">UPI</option>
+              <option value="card">Card</option>
+            </select>
+          </label>
+          <div id="billItems"></div>
+          <button class="btn" id="addBillItemBtn">+ Add Item</button>
+          <div class="bill-total" id="billEstimate">Estimated Total: ₹0.00</div>
+          <button class="btn primary full" id="createBillBtn">Create Bill</button>
+          <p id="billError" class="error"></p>
+          <p id="billSuccess" class="success"></p>
+        </div>
+        <div class="panel">
+          <h3>Recent Bills</h3>
+          <table class="table" id="billsTable">
+            <thead><tr><th>Invoice</th><th>Total ₹</th><th>Payment</th><th>Invoice</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- CUSTOMERS -->
+    <section id="view-customers" class="view hidden">
+      <h2>Customers</h2>
+      <form id="customerForm" class="panel form-grid">
+        <input name="name" placeholder="Customer name *" required />
+        <input name="phone" placeholder="Phone" />
+        <input name="email" type="email" placeholder="Email" />
+        <button type="submit" class="btn primary">+ Add Customer</button>
+      </form>
+      <p id="customerError" class="error"></p>
+      <table class="table" id="customersTable">
+        <thead><tr><th>Name</th><th>Phone</th><th>Email</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

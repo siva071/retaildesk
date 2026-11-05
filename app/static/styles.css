@@ -1,0 +1,61 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Segoe UI", system-ui, Arial, sans-serif; background: #f4f6fb; color: #1f2430; }
+.hidden { display: none !important; }
+.muted { color: #6b7280; }
+.small { font-size: 0.85rem; }
+.error { color: #c0392b; min-height: 1.1em; }
+.success { color: #1e8449; min-height: 1.1em; }
+
+.btn { border: 1px solid #d0d5dd; background: #fff; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 0.92rem; }
+.btn:hover { background: #eef2ff; }
+.btn.primary { background: #2f54eb; border-color: #2f54eb; color: #fff; }
+.btn.primary:hover { background: #1d39c4; }
+.btn.full { width: 100%; margin-top: 8px; }
+.btn.small { padding: 5px 10px; }
+.btn.danger { color: #c0392b; border-color: #f0c6c0; }
+.btn.danger:hover { background: #fdecea; }
+
+/* Login */
+.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #2f54eb, #722ed1); }
+.login-card { background: #fff; padding: 32px; border-radius: 14px; width: 340px; box-shadow: 0 12px 32px rgba(0,0,0,.25); }
+.login-card h1 { margin: 0 0 4px; }
+.login-card label { display: block; margin: 12px 0 4px; font-size: 0.9rem; }
+.login-card input { width: 100%; padding: 9px; border: 1px solid #d0d5dd; border-radius: 8px; }
+
+/* Shell */
+.topbar { display: flex; align-items: center; gap: 20px; background: #141b2d; color: #fff; padding: 10px 20px; position: sticky; top: 0; }
+.brand { font-weight: 700; font-size: 1.1rem; }
+.topbar nav { display: flex; gap: 6px; flex: 1; }
+.nav-btn { background: transparent; border: none; color: #cbd5e1; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.95rem; }
+.nav-btn:hover { background: #232c44; color: #fff; }
+.nav-btn.active { background: #2f54eb; color: #fff; }
+.userbox { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+main { max-width: 1120px; margin: 0 auto; padding: 22px 18px 48px; }
+h2 { margin-top: 4px; }
+
+/* Cards & panels */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 18px; }
+.card { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 1px 4px rgba(16,24,40,.08); }
+.card.warn { border-left: 5px solid #e67e22; }
+.card-label { color: #6b7280; font-size: 0.85rem; text-transform: uppercase; letter-spacing: .04em; }
+.card-value { font-size: 1.7rem; font-weight: 700; margin-top: 6px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 860px) { .grid-2 { grid-template-columns: 1fr; } }
+.panel { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 1px 4px rgba(16,24,40,.08); margin-bottom: 16px; }
+.panel h3 { margin-top: 0; }
+
+/* Tables & forms */
+.table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(16,24,40,.08); }
+.table th, .table td { padding: 10px 12px; border-bottom: 1px solid #eef0f4; text-align: left; font-size: 0.93rem; }
+.table th { background: #f8fafc; color: #475467; }
+.badge { padding: 2px 8px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; }
+.badge.ok { background: #e6f4ea; color: #1e8449; }
+.badge.low { background: #fdecea; color: #c0392b; }
+.toolbar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.toolbar input[type="search"] { flex: 1; min-width: 220px; padding: 9px; border: 1px solid #d0d5dd; border-radius: 8px; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; align-items: end; }
+.form-grid input, .panel select { padding: 9px; border: 1px solid #d0d5dd; border-radius: 8px; width: 100%; }
+.panel label { display: block; margin: 10px 0; font-size: 0.9rem; }
+.bill-row { display: grid; grid-template-columns: 1fr 90px 34px; gap: 8px; margin: 8px 0; }
+.bill-row select, .bill-row input { padding: 8px; border: 1px solid #d0d5dd; border-radius: 8px; width: 100%; }
+.bill-total { font-weight: 700; font-size: 1.05rem; margin: 14px 0 6px; }
