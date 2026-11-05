@@ -1,0 +1,20 @@
+# Render Blueprint — deploys the RetailDesk API as a free web service.
+# Usage: Render dashboard → New → Blueprint → connect this repo.
+# DATABASE_URL is NOT defined here on purpose: paste your Neon/Supabase
+# connection string in the Render dashboard so no secret lives in git.
+services:
+  - type: web
+    name: retaildesk-api
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: "*"
+      - key: DATABASE_URL
+        sync: false # set manually in the dashboard (Neon connection string)
